@@ -94,17 +94,9 @@ EYUXBETA
 
 ### 🔒 Security & Data Flow Overview
 
-```mermaid
-graph TD
-  User[User Device]
-  User -- API Key --> ExpoApp[Expo App]
-  ExpoApp -- HTTPS --> GoogleAI[Google Gemini API]
-  ExpoApp -- HTTPS --> TavilyAPI[Tavily Web Search API]
-  ExpoApp -- LocalStorage --> DeviceStorage[AsyncStorage]
-  ExpoApp -- Notification --> DeviceNotifications[Notifications]
-  ExpoApp -- FileSystem --> DeviceFiles[File System]
-  ExpoApp -- OTA --> ExpoServer[Expo OTA Updates]
-```
+<div align="center">
+  <img src="https://raw.githubusercontent.com/Eul45/EyuX/main/assets/images/333.png" alt="Security and Data Flow Overview" width="100%" style="max-width: 100%; height: auto;" />
+</div>
 
 ---
 
