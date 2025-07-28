@@ -241,6 +241,3 @@ Contributions are what make the open-source community such an amazing place to l
 
 
 ---
-
-**Pro-Tip:**  
-Before you commit this, create a short screen recording of the app in action (switching personalities, using web search, opening the code canvas) and convert it into a GIF. A visual demo is the most effective way to showcase your work.
