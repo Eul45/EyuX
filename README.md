@@ -1,174 +1,246 @@
-# EyuX: AI Chat & Productivity App
+# EyuX: The Supercharged AI Chat Experience
 
-EyuX is a powerful, multi-personality AI chat and productivity app built with Expo and React Native. It offers dynamic AI personalities, live web search, reminders, code execution, file attachments, and more—all in a beautiful, mobile-first experience.
+<div align="center">
+ <img src="https://raw.githubusercontent.com/Eul45/EyuX/main/assets/images/splash-icon (1).ico" alt="EyuX Logo" width="150"/>
 
----
-
-## ✨ Features
-
-- **Dynamic Personalities:** Switch between helpful assistant, storyteller, flirty AI, and more.
-- **Intelligent Memory:** EyuX remembers key facts about you for a personalized conversation.
-- **Effortless Reminders:** Ask the AI to set reminders and get device notifications.
-- **Code on the Canvas:** Open, edit, and run code snippets in an interactive environment.
-- **Versatile Attachments:** Send images, documents, and files directly in chat.
-- **Live Web Search:** Get up-to-the-minute answers and information from the web.
-- **Enhanced AI Image Generation:** Generate images with consistent characters.
-- **Live Voice & Chat Input:** Use your voice or text to chat with the AI.
-- **Access to Higher Models:** Unlock advanced AI models for better responses.
-- **Early Access:** Be the first to try new features.
+  <br/><br/>
+  <strong>A feature-rich, multi-personality AI chat and productivity app built with React Native & Expo.</strong>
+  <br/><br/>
+  <a href="https://github.com/Eul45/EyuX/stargazers"><img src="https://img.shields.io/github/stars/Eul45/EyuX?style=for-the-badge&logo=github&color=c471ed&logoColor=white" alt="Stars"/></a>
+  <a href="https://github.com/Eul45/EyuX/network/members"><img src="https://img.shields.io/github/forks/Eul45/EyuX?style=for-the-badge&logo=github&color=5ac8fa&logoColor=white" alt="Forks"/></a>
+  <a href="https://github.com/Eul45/EyuX/blob/main/LICENSE"><img src="https://img.shields.io/github/license/Eul45/EyuX?style=for-the-badge&color=34c759" alt="License"/></a>
+</div>
 
 ---
 
-## 🛠️ Getting Started
+EyuX is more than just a chatbot. It's a versatile mobile companion designed to be your assistant, entertainer, and productivity partner. Powered by Google's Gemini models, it features dynamic AI personalities, live web search, AI image generation, interactive code execution, long-term memory, and extensive customization options, all wrapped in a sleek, animated, and user-friendly interface.
+
+---
+## 🏗️ Project Structure & Architecture
+
+Below is the current project structure, designed for clarity, scalability, and ease of navigation:
+
+```
+EYUXBETA
+├── app
+│   └── (tabs)
+│       └── index.tsx             // NOW: A clean entry point that renders the main App component.
+├── src
+│   ├── api                       // For all external API call logic.
+│   │   ├── geminiService.ts
+│   │   └── tavilyService.ts
+│   ├── assets                    // Stays as is (fonts, images).
+│   ├── components                // Reusable UI components.
+│   │   ├── animated              // Purely aesthetic animated components.
+│   │   │   ├── AnimatedBackground.tsx
+│   │   │   └── StarryBackground.tsx
+│   │   ├── chat                  // Components specific to the chat screen.
+│   │   │   ├── ActiveModeIndicator.tsx
+│   │   │   ├── AnimatedChatTitle.tsx
+│   │   │   ├── ChatInput.tsx
+│   │   │   ├── ImageGenerationPlaceholder.tsx
+│   │   │   ├── MessageItem.tsx
+│   │   │   ├── SpeechControlToast.tsx
+│   │   │   ├── TypingIndicator.tsx
+│   │   │   └── WebSearchLoader.tsx
+│   │   ├── common                // Generic components used across the app.
+│   │   │   ├── CodeBlock.tsx
+│   │   │   ├── EyuxLogo.tsx
+│   │   │   └── GoSuperEyuxButton.tsx
+│   │   ├── modals                // All modal components.
+│   │   │   ├── ApiKeyPromptModal.tsx
+│   │   │   ├── ChatOptionsMenu.tsx
+│   │   │   ├── CodeCanvas.tsx
+│   │   │   ├── FoldersScreen.tsx
+│   │   │   ├── GuidanceModal.tsx
+│   │   │   ├── ImageViewerModal.tsx
+│   │   │   ├── MemoriesModal.tsx
+│   │   │   ├── MoveToFolderModal.tsx
+│   │   │   ├── RenameModal.tsx
+│   │   │   ├── SchedulesModal.tsx
+│   │   │   ├── SelectionModal.tsx
+│   │   │   └── SuperEyuXScreen.tsx
+│   │   └── navigation            // Components related to navigation (like the drawer).
+│   │       └── Drawer.tsx
+│   ├── constants                 // All application constants.
+│   │   ├── api.ts
+│   │   ├── app.ts
+│   │   ├── personalities.ts
+│   │   └── storage.ts
+│   ├── contexts                  // For React Context providers.
+│   │   └── ToastContext.tsx
+│   ├── hooks                     // Custom React hooks.
+│   │   ├── useNavigationBarStyler.ts
+│   │   └── usePrevious.ts
+│   ├── screens                   // Top-level screen components.
+│   │   ├── ApiKeySetupScreen.tsx
+│   │   ├── ChatScreen.tsx
+│   │   ├── OnboardingScreen.tsx
+│   │   └── SettingsNavigator.tsx   // A new component to manage settings navigation.
+│   ├── services                  // Services for managing device features.
+│   │   ├── fileService.ts
+│   │   ├── notificationService.ts
+│   │   └── storageService.ts
+│   ├── types                     // Centralized TypeScript types and interfaces.
+│   │   └── index.ts
+│   ├── utils                     // Helper functions.
+│   │   └── systemInstructions.ts
+│   └── App.tsx                   // The main application component (formerly AppContent).
+├── package.json
+└── ... (other root config files)
+```
+
+---
+
+### 🔒 Security & Data Flow Overview
+
+```mermaid
+graph TD
+  User[User Device]
+  User -- API Key --> ExpoApp[Expo App]
+  ExpoApp -- HTTPS --> GoogleAI[Google Gemini API]
+  ExpoApp -- HTTPS --> TavilyAPI[Tavily Web Search API]
+  ExpoApp -- LocalStorage --> DeviceStorage[AsyncStorage]
+  ExpoApp -- Notification --> DeviceNotifications[Notifications]
+  ExpoApp -- FileSystem --> DeviceFiles[File System]
+  ExpoApp -- OTA --> ExpoServer[Expo OTA Updates]
+```
+
+---
+
+## ✨ Features Showcase
+
+EyuX is packed with features that create a truly interactive and intelligent chat experience.
+
+<!-- Place a GIF demonstrating the app's key features here -->
+<!-- ![EyuX App Demo](link_to_your_demo.gif) -->
+
+---
+
+## 🧠 Core AI Capabilities
+
+- **🤖 Dynamic Personalities:** Instantly switch the AI's persona—from a helpful Assistant to a chaotic Storyteller, a witty Gen Z, or even an Unhinged AI.
+- **🌐 Live Web Search:** The AI automatically detects when it needs fresh information and uses the Tavily API to search the web for real-time events, news, and data.
+- **🎨 AI Image Generation:** Generate images directly in the chat by describing what you want to see using the `/imagine` command.
+- **💾 Intelligent Memory:** EyuX remembers key facts you share, creating a continuous, personalized conversation. You can also manage these memories manually.
+- **⏰ Effortless Reminders:** Set reminders using natural language (e.g., "remind me to check the oven in 10 minutes"), and EyuX will schedule a device notification.
+- **🔄 Multi-Model Support:** Switch between different Google Gemini models (e.g., Flash 2.0, Flash 2.5) right from the sidebar to balance speed and power.
+
+---
+
+## 📱 User Experience & Interface
+
+- **🎨 Rich Message Rendering:** Full Markdown support for text formatting, plus beautifully rendered code blocks with syntax highlighting and a one-click copy button.
+- **🖼️ Interactive Code Canvas:** When the AI provides web code (HTML/CSS/JS), you can open it in an interactive canvas to edit and run it live in a WebView.
+- **📎 Versatile Attachments:** Enhance your prompts by attaching images from your gallery, taking a photo, or uploading documents.
+- **🗣️ Text-to-Speech:** Have the AI's responses read aloud with an intuitive speech control bar that shows progress.
+- **💅 Deep Customization:** Full Dark & Light Mode support. Personalize chat bubble colors for both you and the AI.
+- **✨ Rich Animations:** The UI is full of smooth, delightful animations, from the "Super EyuX" screen transition to the animated chat titles and starry backgrounds.
+
+---
+
+## 🗂️ Organization & Data Management
+
+- **🗂️ Chat Folders:** Organize your conversations into custom folders.
+- **🤖 Automatic Organization:** Let the AI automatically categorize new chats into the most relevant folder.
+- **💾 Full Backup & Restore:** Export all your chats, folders, settings, and memories to a single JSON file and import it on any device.
+- **🔑 Secure API Key Management:** Easily add and update your API keys in a dedicated settings screen.
+
+---
+
+## 🛠️ Tech Stack
+
+- **Framework:** React Native with Expo
+- **AI:** Google Generative AI (Gemini) & Tavily AI for Web Search
+- **State Management:** React Hooks (useState, useContext, useCallback)
+- **Animations:** React Native Reanimated
+- **Local Storage:** AsyncStorage
+- **UI Components:** @expo/vector-icons, react-native-markdown-display, react-native-webview
+
+---
+
+## 🚀 Getting Started
 
 ### 1. Prerequisites
 
-- [Node.js](https://nodejs.org/) (v16.17.0 or newer recommended)
-- [npm](https://www.npmjs.com/) (comes with Node.js)
-- [Expo CLI](https://docs.expo.dev/get-started/installation/) (install globally with `npm install -g expo-cli`)
+- Node.js (LTS version, v18 or newer recommended)
+- npm (comes with Node.js)
+- Expo Go app on your iOS or Android device for the quickest setup.
 
-### 2. Install Dependencies
+### 2. Clone the Repository
+
+```bash
+git clone https://github.com/Eul45/EyuX.git
+cd EyuX
+```
+
+### 3. Install Dependencies
 
 ```bash
 npm install
 ```
 
-This will install all required dependencies listed in `package.json`, including:
+### 4. Set Up API Keys
 
-<details>
-<summary>Click to see all dependencies</summary>
+EyuX requires API keys to connect to AI services. You'll need to create a `.env` file to store them securely.
 
-- **Core:** `expo`, `react`, `react-native`, `expo-router`
-- **Navigation:** `@react-navigation/native`, `@react-navigation/bottom-tabs`, `@react-navigation/elements`
-- **AI & Utilities:** `@google/generative-ai`, `uuid`, `@types/uuid`
-- **UI & Media:** `@expo/vector-icons`, `expo-image`, `expo-image-picker`, `expo-blur`, `expo-font`, `expo-haptics`, `expo-status-bar`, `expo-splash-screen`, `expo-symbols`, `expo-system-ui`, `expo-web-browser`, `expo-sharing`, `expo-clipboard`, `expo-file-system`, `expo-document-picker`, `expo-media-library`, `react-native-svg`, `react-native-markdown-display`, `react-native-reanimated`, `react-native-gesture-handler`, `react-native-safe-area-context`, `react-native-screens`, `react-native-webview`
-- **Async & Storage:** `@react-native-async-storage/async-storage`
-- **Notifications:** `expo-notifications`, `expo-device`, `expo-navigation-bar`
-- **Dev:** `expo-dev-client`, `eslint`, `eslint-config-expo`, `typescript`, `@babel/core`, `@types/react`
-</details>
+- **Create the file:** In the root of the project, create a new file named `.env`.
+- **Get Your Keys:**
+  - **Google AI (Gemini):** Go to [Google AI Studio](https://aistudio.google.com/app/apikey) to get your free API key.
+  - **Tavily AI (Web Search):** Go to [Tavily.com](https://tavily.com/#api) to get your free API key for the web search feature.
+- **Add Keys to .env:**  
+  ```env
+  EXPO_PUBLIC_GEMINI_API_KEY="YOUR_GOOGLE_AI_API_KEY_HERE"
+  EXPO_PUBLIC_TAVILY_API_KEY="YOUR_TAVILY_API_KEY_HERE"
+  ```
+  > **Note:** The `EXPO_PUBLIC_` prefix is required by Expo to expose these variables to the app.
 
-### 3. Start the App
+### 5. Start the Development Server
 
 ```bash
 npx expo start
 ```
 
-You can then open the app in:
-
-- [Expo Go](https://expo.dev/go) (for quick testing)
-- Android emulator
-- iOS simulator
-- A [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-
-### 4. API Keys
-
-Some features (like advanced AI and web search) require API keys. You’ll be prompted in-app to enter these as needed.
+This will start the Metro bundler. You can then scan the QR code with the Expo Go app on your phone or run the app in an emulator.
 
 ---
 
-## 📦 Project Structure
 
-- `app/` — Main app screens and navigation (file-based routing)
-- `screens/` — All major screens (chat, settings, onboarding, etc.)
-- `modals/` — All modal and popup components
-- `components/` — Reusable UI components
-- `constants/` — App-wide constants (e.g., colors)
-- `hooks/` — Custom React hooks
-- `assets/` — Fonts and images
+## 🤝 How to Contribute
 
-### 📁 Folder/File Structure Diagram
+Contributions are what make the open-source community such an amazing place to learn, inspire, and create. Any contributions you make are greatly appreciated.
 
-```mermaid
-graph TD
-  A[app/]
-  A --> B(screens)
-  A --> C(modals)
-  A --> D(tabs)
-  A --> E(constants)
-  A --> F(assets)
-  A --> G(hooks)
-  A --> H(components)
-  H --> I(ui)
-  B --> B1[ChatScreen.tsx]
-  B --> B2[SettingsScreen.tsx]
-  B --> B3[PersonalizationScreen.tsx]
-  B --> B4[ControlDataScreen.tsx]
-  B --> B5[ApiKeysScreen.tsx]
-  B --> B6[AboutScreen.tsx]
-  B --> B7[OnboardingScreen.tsx]
-  C --> C1[GuidanceModal.tsx]
-  C --> C2[SelectionModal.tsx]
-  C --> C3[CodeCanvas.tsx]
-  C --> C4[ApiKeySetupScreen.tsx]
-  C --> C5[SuperEyuXScreen.tsx]
-  C --> C6[RenameModal.tsx]
-  C --> C7[VideoTutorialModal.tsx]
-```
+**Key Contribution Areas:**
+- **Refactoring:** Help break down large files into smaller, reusable components and screens as outlined in the target architecture.
+- **Bug Fixes:** Find and fix bugs to improve stability.
+- **New Features:** Propose and implement new, exciting features.
+- **Performance Optimization:** Help improve app startup time and responsiveness.
+
+**Steps:**
+1. Fork the Project
+2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the Branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
 ---
 
-## 🧹 Resetting the Project
-
-To reset the app to a blank state, run:
-
-```bash
-npm run reset-project
-```
-
-- This will move your current `app/`, `components/`, `hooks/`, `constants/`, and `scripts/` directories to `app-example/` (or delete them, based on your choice).
-- It then creates a fresh `app/` directory with a starter screen.
-- You can safely delete the `app-example/` directory and the `reset-project.js` script after resetting.
 
 ---
 
-## 🚀 Building & Deployment (EAS)
+## 🙏 Acknowledgments
 
-This project is EAS-ready. See `eas.json` for build profiles.
+- Expo Team for their incredible tools and platform.
+- Google for the powerful Gemini models.
+- Tavily for the excellent search API.
+- All the creators of the open-source libraries used in this project.
 
-- **Install EAS CLI:**  
-  ```bash
-  npm install -g eas-cli
-  ```
-- **Build for development:**  
-  ```bash
-  eas build --profile development --platform all
-  ```
-- **Build for production:**  
-  ```bash
-  eas build --profile production --platform all
-  ```
-- **Submit to app stores:**  
-  ```bash
-  eas submit --profile production --platform all
-  ```
+<div align="center">
+  <strong>&lt;/&gt; Made by Eyuel Engida</strong>
+</div>
 
-For more, see [Expo EAS documentation](https://docs.expo.dev/eas/).
 
 ---
 
-## 🧑‍💻 Useful Scripts
-
-- `npm start` — Start Expo dev server
-- `npm run android` — Open on Android emulator/device
-- `npm run ios` — Open on iOS simulator/device
-- `npm run web` — Run on web
-- `npm run lint` — Lint code with ESLint
-
----
-
-## 📚 Learn More
-
-- [Expo documentation](https://docs.expo.dev/)
-- [React Native documentation](https://reactnative.dev/)
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/)
-
----
-
-## 💬 Community
-
-- [Expo on GitHub](https://github.com/expo/expo)
-- [Expo Discord](https://chat.expo.dev)
-
----
-
-**Enjoy building with EyuX!**
+**Pro-Tip:**  
+Before you commit this, create a short screen recording of the app in action (switching personalities, using web search, opening the code canvas) and convert it into a GIF. A visual demo is the most effective way to showcase your work.
