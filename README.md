@@ -93,58 +93,12 @@ EYUXBETA
 ---
 ### 🔒 Security & Data Flow Overview
 
-```mermaid
-graph TD
-    subgraph "User & Device"
-        User[User]
-        ScreenOutput[UI / Screen]
-        AudioOutput[Audio / Speech]
-    end
 
-    subgraph "EyuX Expo App (Core Logic)"
-        App["EyuX App"]
-    end
-
-    subgraph "Cloud Services (External)"
-        GoogleAI["Google Gemini API"]
-        TavilyAPI["Tavily Web Search API"]
-        ImageAPI["Image Generation API\n(pollinations.ai)"]
-        ExpoServer["Expo EAS Servers"]
-    end
-
-    subgraph "On-Device Services & Hardware"
-        DeviceStorage["AsyncStorage\n(Chat History, Settings, API Keys)"]
-        DeviceFiles["File System\n(Cache, Imports/Exports)"]
-        subgraph "Device APIs"
-            Notifications["Notifications Service"]
-            TTS["Text-to-Speech (TTS)"]
-            Media["Media Library & Camera"]
-        end
-    end
-
-    %% --- Data Flows ---
-    User -- "Input (Text, Taps, File Selection)" --> App
-    
-    App -- "API Request (HTTPS)" --> GoogleAI
-    GoogleAI -- "AI Response" --> App
-    
-    App -- "API Request (HTTPS)" --> TavilyAPI
-    TavilyAPI -- "Search Results" --> App
-
-    App -- "Image Request (HTTPS)" --> ImageAPI
-    ImageAPI -- "Generated Image" --> App
-
-    App <-->|Read/Write Data| DeviceStorage
-    App <-->|Read/Write Files| DeviceFiles
-    App -- "Triggers/Reads APIs" --> DeviceAPIs
-
-    App -- "Updates UI" --> ScreenOutput
-    DeviceAPIs -- "Plays Generated Speech" --> TTS
-    TTS -- "Speaks to User" --> AudioOutput
-    DeviceAPIs -- "Shows Alert" --> Notifications
-    
-    ExpoServer -- "OTA Updates" --> App
-```
+ <div style="overflow-x: auto; white-space: nowrap; text-align: center;">
+  <img src="https://raw.githubusercontent.com/Eul45/EyuX/main/assets/images/333.png"
+       alt="EyuX Architecture Diagram"
+       style="height: auto; max-width: 100%;" />
+</div>
 
 
 
