@@ -93,15 +93,16 @@ EYUXBETA
 ---
 ### 🔒 Security & Data Flow Overview
 
-<p align="center">
+<div style="overflow-x: auto; white-space: nowrap;">
   <a href="https://raw.githubusercontent.com/Eul45/EyuX/main/assets/images/333.png" target="_blank">
-    <img src="https://raw.githubusercontent.com/Eul45/EyuX/main/assets/images/333.png" alt="Security and Data Flow Overview" style="max-width: 100%; height: auto; display: block;" />
+    <img src="https://raw.githubusercontent.com/Eul45/EyuX/main/assets/images/333.png" alt="Security and Data Flow Overview" style="min-width: 700px; height: auto;" />
   </a>
-</p>
+</div>
 
 <p align="center">
-  <em>Click or tap to zoom in. On mobile, swipe sideways to explore the full diagram.</em>
+  <em>↔️ Swipe horizontally on mobile or click image to zoom.</em>
 </p>
+
 
 
 ---
